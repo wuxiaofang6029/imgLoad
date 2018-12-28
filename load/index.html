@@ -67,17 +67,27 @@
         // })()
 
         // 3、用轮询方式判断
-        (() => {
-            let result = [];
-            imgData.forEach(item => {
-                let img = new Image();
-                img.onload = () => {
-                    result.push(img);
-                    if (result.length == imgData.length) {
-                        result.forEach(item => document.body.appendChild(item))
-                    }
-                }
-                img.src = item.src;
+        // (() => {
+        //     let result = [];
+        //     imgData.forEach(item => {
+        //         let img = new Image();
+        //         img.onload = () => {
+        //             result.push(img);
+        //             if (result.length == imgData.length) {
+        //                 result.forEach(item => document.body.appendChild(item))
+        //             }
+        //         }
+        //         img.src = item.src;
+        //     })
+        // })()
+
+
+        // 谁先加载完成就谁先添加到dom中
+        // 第一种
+        (function loadImgAsync() {
+            promises.forEach(async item => {
+                let img = await item;
+                document.body.appendChild(img);
             })
         })()
     </script>
