@@ -58,12 +58,27 @@
         // })
 
         // 2、用async/await实现
-        (async function loadImgAsync() {
-            let imgs = [];
-            for (let i = 0, len = promises.length; i < len; i++) {
-                imgs.push(await promises[i]);
-            }
-            imgs.forEach(item => document.body.appendChild(item))
+        // (async function loadImgAsync() {
+        //     let imgs = [];
+        //     for (let i = 0, len = promises.length; i < len; i++) {
+        //         imgs.push(await promises[i]);
+        //     }
+        //     imgs.forEach(item => document.body.appendChild(item))
+        // })()
+
+        // 3、用轮询方式判断
+        (() => {
+            let result = [];
+            imgData.forEach(item => {
+                let img = new Image();
+                img.onload = () => {
+                    result.push(img);
+                    if (result.length == imgData.length) {
+                        result.forEach(item => document.body.appendChild(item))
+                    }
+                }
+                img.src = item.src;
+            })
         })()
     </script>
 </body>
